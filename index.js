@@ -1,19 +1,14 @@
 //! index.js
 
-const zlib=require("node:zlib")
-const fs = require("node:fs");
+const http = require("node:http");
 
-const gzip=zlib.createGzip();
-
-const readableStream = fs.createReadStream("./file.txt", {
-  encoding: "utf-8",
-  highWaterMark:2
+const server = http.createServer((req, res) => {
+  res.writeHead(200,{"Content-Type":"text/pldain"});
+  res.end("Hello world");
 });
 
-const writeableStream = fs.createWriteStream("./file2.txt");
+server.listen(3000, () => {
+  console.log("server running on port 3000");
+});
 
-readableStream.pipe(writeableStream)
-
-//creates a zip folder of type gzip
-readableStream.pipe(gzip).pipe(fs.WriteStream("./file2.txt.gz"))
-//readableStream->gzip->writestream
+//req gives information about incoming requests and res is used to send back response to client and we specify that server must listen to incoming requests on port 3000
