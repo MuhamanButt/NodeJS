@@ -13,3 +13,7 @@
 // 9. For one final time in the same loop, the micro task queues are executed. nextTick queue followed by promise queue.
 
 
+console.log("console log 1")
+Promise.resolve().then(()=>console.log("this is promise.resolve 1"))
+process.nextTick(()=>console.log("this is process.nextTixk 1"))
+console.log("console log 2")
