@@ -1,30 +1,11 @@
 //! index.js
 
-const http = require("node:http");
-const fs = require("node:fs");
+const crypto = require("node:crypto");
 
-const server = http.createServer((req, res) => {
-    //req.method GET POST PUT DELETE
-  if (req.url === "/") {
-    res.writeHead(200, { "Content-Type": "text/plain" });
-    res.end("Home page");
-  } else if (req.url === "/about") {
-    res.writeHead(200, { "Content-Type": "text/plain" });
-    res.end("About page");
-  } else if (req.url === "/api") {
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(
-      JSON.stringify({
-        firstName: "Muhaman",
-        lastName: "Ijaz",
-      })
-    );
-  } else {
-    res.writeHead(404);
-    res.end("Page not Found");
-  }
-});
-
-server.listen(3000, () => {
-  console.log("server running on port 3000");
-});
+const MAX_CALLS = 3;
+const start = Date.now();
+for (let i = 0; i < MAX_CALLS; i++) {
+  crypto.pbkdf2("password", "salt", 100000, 512, "sha512", () => {
+    console.log(`Hash : ${i + 1}`, Date.now() - start);
+  });
+}
