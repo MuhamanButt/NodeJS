@@ -16,10 +16,15 @@
 const fs = require("fs")
 fs.readFile(__filename,()=>{
   console.log("this is readFile 1")
+  setImmediate(()=>console.log('this is setImmediate inside read file'))
+  process.nextTick(()=>console.log('this is nexttixk inside readfile'))
+  Promise.resolve().then(()=>console.log('this is promise inside readFile'))
 })
+
 process.nextTick(()=>console.log('this is process.nextTick 1'))
 Promise.resolve().then(()=>console.log('this is promise.resolve 1'))
 setTimeout(() => {
   console.log('this is setTimeout 1')
 }, 0);
-for(let i=0;i<2000000;i++){}
+
+setImmediate(()=>console.log('this is setImmediate'))
